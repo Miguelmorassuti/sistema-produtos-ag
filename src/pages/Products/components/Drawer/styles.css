@@ -1,0 +1,48 @@
+/* Estilo para o AppBar */
+.appbar {
+  background-color: rgb(253, 181, 11) !important;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between;
+  transition:
+    margin 0.3s ease-out,
+    width 0.3s ease-out;
+}
+
+/* Estilo do AppBar quando o drawer estiver aberto */
+.appbar-open {
+  width: calc(100% - 240px);
+  margin-left: 240px;
+}
+
+/* Estilo principal do conteúdo */
+.main {
+  flex-grow: 1;
+  padding: 24px;
+  margin-left: -240px;
+  transition: margin 0.3s ease-out;
+}
+
+.main-open {
+  margin-left: 0;
+}
+
+/* Header do Drawer */
+.drawer-header {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  justify-content: flex-end;
+}
+
+/* Estilo do Drawer */
+.drawer {
+  width: 240px;
+  flex-shrink: 0;
+}
+
+.drawer-paper {
+  background-color: rgb(253, 181, 11) !important;
+  width: 240px;
+  box-sizing: border-box;
+}

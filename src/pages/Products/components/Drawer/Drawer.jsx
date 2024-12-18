@@ -1,10 +1,10 @@
-import React from "react";
-import { styled, useTheme } from "@mui/material/styles";
+import React, { useState } from "react";
+import { useTheme } from "@mui/material/styles";
 import {
   Box,
   Drawer,
   CssBaseline,
-  AppBar as MuiAppBar,
+  AppBar,
   Toolbar,
   Typography,
   IconButton,
@@ -14,7 +14,9 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Button,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import {
   Menu as MenuIcon,
   ChevronLeft as ChevronLeftIcon,
@@ -22,71 +24,54 @@ import {
 } from "@mui/icons-material";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
-import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import SettingsIcon from "@mui/icons-material/Settings";
 
-const drawerWidth = 240;
-
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
-  ({ theme, open }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: `-${drawerWidth}px`,
-    ...(open && {
-      transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    }),
-  })
-);
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  backgroundColor: " rgb(253, 181, 11)",
-  transition: theme.transitions.create(["margin", "width"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  padding: theme.spacing(0, 1),
-  ...theme.mixins.toolbar,
-  justifyContent: "flex-end",
-}));
+import "./styles.css";
 
 const SideMenu = ({ children }) => {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
+  // Estrutura dos botões do menu
+  const mainMenuItems = [
+    { title: "Home", icon: <InboxIcon />, path: "/home" },
+    { title: "Produtos", icon: <MailIcon />, path: "/produtos" },
+    { title: "Usuários", icon: <InboxIcon />, path: "/usuarios" },
+  ];
+
+  const secondaryMenuItems = [
+    { title: "Perfil", icon: <InboxIcon />, path: "/perfil" },
+    { title: "Configurações", icon: <MailIcon />, path: "/configuracoes" },
+    { title: "Sair", icon: <InboxIcon />, path: "/logout" },
+  ];
+
+  const handleDrawerOpen = () => setOpen(true);
+  const handleDrawerClose = () => setOpen(false);
+
+  // Função de navegação
+  const handleNavigation = (path) => {
+    navigate(path);
   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  const renderMenuItems = (items) =>
+    items.map((item) => (
+      <ListItem key={item.title} disablePadding>
+        <ListItemButton onClick={() => handleNavigation(item.path)}>
+          <ListItemIcon>{item.icon}</ListItemIcon>
+          <ListItemText primary={item.title} />
+        </ListItemButton>
+      </ListItem>
+    ));
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box display="flex">
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar
+        position="fixed"
+        className={`appbar ${open ? "appbar-open" : ""}`}
+      >
         <Toolbar>
           <IconButton
             color="inherit"
@@ -104,21 +89,25 @@ const SideMenu = ({ children }) => {
             Sistema de Produtos
           </Typography>
         </Toolbar>
+        <Box alignSelf="center">
+          <Button color="inherit">
+            <NotificationsIcon />
+          </Button>
+          <Button color="inherit">
+            <SettingsIcon />
+          </Button>
+        </Box>
       </AppBar>
       <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
-            width: drawerWidth,
-            boxSizing: "border-box",
-          },
-        }}
+        className="drawer"
         variant="persistent"
         anchor="left"
         open={open}
+        classes={{
+          paper: "drawer-paper",
+        }}
       >
-        <DrawerHeader>
+        <Box className="drawer-header">
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
@@ -126,38 +115,16 @@ const SideMenu = ({ children }) => {
               <ChevronRightIcon />
             )}
           </IconButton>
-        </DrawerHeader>
+        </Box>
         <Divider />
-        <List>
-          {["Home", "Produtos", "Usuários"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+        <List>{renderMenuItems(mainMenuItems)}</List>
         <Divider />
-        <List>
-          {["Perfil ", "Configurações", "Sair"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+        <List>{renderMenuItems(secondaryMenuItems)}</List>
       </Drawer>
-      <Main open={open}>
-        <DrawerHeader />
+      <main className={`main ${open ? "main-open" : ""}`}>
+        <Box className="drawer-header" />
         {children}
-      </Main>
+      </main>
     </Box>
   );
 };
