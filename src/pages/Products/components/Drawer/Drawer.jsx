@@ -21,11 +21,14 @@ import {
   Menu as MenuIcon,
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
+  Settings as SettingsIcon,
+  Logout as LogoutIcon,
+  Home as HomeIcon,
+  LocalGroceryStore as ProductIcon,
+  AssignmentInd as ProfileIcon,
+  PeopleAlt as PeopleAltIcon,
+  Notifications as NotificationsIcon,
 } from "@mui/icons-material";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import SettingsIcon from "@mui/icons-material/Settings";
 
 import "./styles.css";
 
@@ -36,15 +39,15 @@ const SideMenu = ({ children }) => {
 
   // Estrutura dos botões do menu
   const mainMenuItems = [
-    { title: "Home", icon: <InboxIcon />, path: "/home" },
-    { title: "Produtos", icon: <MailIcon />, path: "/produtos" },
-    { title: "Usuários", icon: <InboxIcon />, path: "/usuarios" },
+    { title: "Home", icon: <HomeIcon />, path: "/home" },
+    { title: "Produtos", icon: <ProductIcon />, path: "/produtos" },
+    { title: "Usuários", icon: <PeopleAltIcon />, path: "/usuarios" },
   ];
 
   const secondaryMenuItems = [
-    { title: "Perfil", icon: <InboxIcon />, path: "/perfil" },
-    { title: "Configurações", icon: <MailIcon />, path: "/configuracoes" },
-    { title: "Sair", icon: <InboxIcon />, path: "/logout" },
+    { title: "Perfil", icon: <ProfileIcon />, path: "/perfil" },
+    { title: "Configurações", icon: <SettingsIcon />, path: "/configuracoes" },
+    { title: "Sair", icon: <LogoutIcon />, path: "/" },
   ];
 
   const handleDrawerOpen = () => setOpen(true);
