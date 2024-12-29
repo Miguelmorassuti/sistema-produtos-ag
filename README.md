@@ -1,6 +1,6 @@
 # Sistema de Gerenciamento de Produtos (Frontend)
 
-Este é o frontend de um sistema de gerenciamento de produtos, desenvolvido com **React + Vite + MUI**. O objetivo deste projeto é criar uma interface amigável e responsiva para gerenciar produtos, permitindo a criação, edição, listagem e exclusão de itens.
+Este é o frontend de um sistema de gerenciamento de produtos, desenvolvido com **React + Vite + MUI**. O objetivo deste projeto é criar uma interface amigável e responsiva para gerenciar produtos e usuários, permitindo a criação, edição, listagem e exclusão de itens.
 
 ⚠️ **Status do projeto**: Em desenvolvimento.
 
